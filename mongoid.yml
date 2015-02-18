@@ -1,8 +1,10 @@
 development:
   adapter: postgresql
-  host: localhost
-  username: user
-  database: app-dev
+  host: ec2-54-197-251-18.compute-1.amazonaws.com
+  username: anoaqwlfhovmmn
+  password: ySY9bg5pHkaLOqBAk10UHrZM6r
+  database: d5q9g8fl90ml7h
+  port: 5432
 production:
   sessions:
     default:
