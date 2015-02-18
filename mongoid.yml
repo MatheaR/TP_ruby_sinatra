@@ -1,9 +1,8 @@
 development:
-  sessions:
-    default:
-      database: cms
-      hosts:
-        - localhost:27017
+  adapter: postgresql
+  host: localhost
+  username: user
+  database: app-dev
 production:
   sessions:
     default:

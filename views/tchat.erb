@@ -61,17 +61,19 @@
       .chat li.left .chat-body
       {
           margin-left: 60px;
+          margin-right: 60px;
       }
 
       .chat li.right .chat-body
       {
           margin-right: 60px;
+          margin-left: 60px;
       }
 
 
       .chat li .chat-body p
       {
-          margin: 0;
+          margin: 10px 0;
           color: #777777;
       }
 
@@ -83,7 +85,7 @@
       .panel-body
       {
           overflow-y: scroll;
-          height: 250px;
+          height: 400px;
       }
 
       ::-webkit-scrollbar-track
@@ -126,23 +128,31 @@
     <div class="body"></div>
     <div class="grad"></div>
     <!-- <div class="fullscreen_bg"> -->
-      <div class="container haha" style="margin-top:15%;">
+      <div class="container haha" style="margin-top:10%;">
           <div class="row">
               <div class="col-lg-8 col-lg-offset-2">
                   <div class="panel panel-primary">
 
                       <div class="panel-heading">
-                          <span class="glyphicon glyphicon-comment"></span> Chat - (Connecté sous le nom de <strong>Flo</strong>)
+                          <span class="glyphicon glyphicon-comment"></span> Chat - (Connecté sous le nom de <strong><%= @userSession %></strong>)
                           <div class="btn-group pull-right">
                               <button type="button" class="btn btn-default btn-xs dropdown-toggle" data-toggle="dropdown">
                                   <span class="glyphicon glyphicon-chevron-down"></span>
                               </button>
                               <ul class="dropdown-menu slidedown">
-                                  <li><a href="http://www.jquery2dotnet.com"><span class="glyphicon glyphicon-refresh">
-                                  </span>Actualiser</a></li>
+                                  <li>
+                                    <form action="/supAll" method="POST">
+                                      <input id="userDeco" name="user_id" value="<%= @userId %>" type="hidden">
+                                      <input type="submit" class="btn btn-link" value="Supprimer tous mes messages"/>
+                                    </form>
+                                  </li>
                                   <li class="divider"></li>
-                                  <li><a href="http://www.jquery2dotnet.com"><span class="glyphicon glyphicon-off"></span>
-                                      Déconnection</a></li>
+                                  <li>
+                                    <form action="/deco" method="POST">
+                                      <input id="userDeco" name="user" value="<%= @userSession %>" type="hidden">
+                                      <input type="submit" class="btn btn-link" value=" Se déconnecter"/>
+                                    </form>
+                                  </li>
                               </ul>
                           </div>
                       </div>
@@ -151,16 +161,21 @@
                           <ul class="chat">
                             <% if @messages.any? %>
                                 <% for @m in @messages %>
-                                    <% if @m.user == "Flo" %>
+                                    <% if @m.user.pseudo == @userSession %>
                                        <!-- on affiche vers la droite -->
                                       <li class="right clearfix">
                                         <span class="chat-img pull-right">
-                                          <img src="http://placehold.it/50/FA6F57/fff&amp;text=FL" alt="User Avatar" class="img-circle">
+                                          <img src="http://placehold.it/50/FA6F57/fff&amp;text=<%=@m.user.initiale%>" alt="User Avatar" class="img-circle">
                                         </span>
                                         <div class="chat-body clearfix">
                                             <div class="header">
-                                                <small class=" text-muted" style="text-align:left;"><button class="btn btn-danger btn-xs"><strong style="vertical-align:text-bottom !important; font-size:9px;">Supprimer</strong></button></small>
-                                                <strong class="pull-right primary-font"><%= @m.user %></strong>
+                                                <small class=" text-muted" style="text-align:left;">
+                                                  <form action="/supOne" method="POST">
+                                                    <input id="idMess" name="id" value="<%= @m.id %>" type="hidden"/>
+                                                    <input type="submit" class="btn btn-danger btn-xs" value="Supprimer"/>
+                                                  </form>
+                                                </small>
+                                                <strong class="pull-right primary-font"><%= @m.user.pseudo %></strong>
                                             </div>
                                             <p>
                                                 <%= @m.message %>
@@ -172,11 +187,11 @@
                                         <!-- sinon ce sont les autres users donc à gauche -->
                                       <li class="left clearfix">
                                           <span class="chat-img pull-left">
-                                            <img src="http://placehold.it/50/55C1E7/fff&amp;text=MR" alt="User Avatar" class="img-circle">
+                                            <img src="http://placehold.it/50/55C1E7/fff&amp;text=<%= @m.user.initiale %>" alt="User Avatar" class="img-circle">
                                           </span>
                                           <div class="chat-body clearfix">
                                               <div class="header">
-                                                  <strong class="primary-font"><%= @m.user %></strong>
+                                                  <strong class="primary-font"><%= @m.user.pseudo %></strong>
                                                   <!--<small class="pull-right text-muted">
                                                       <button class="glyphicon glyphicon-remove"></button>
                                                   </small> -->
@@ -199,12 +214,11 @@
                                   </span>
                                   <div class="chat-body clearfix">
                                       <div class="header">
-                                          <strong class="primary-font">Jack Sparrow</strong> <small class="pull-right text-muted">
-                                              <button class="glyphicon glyphicon-remove"></button></small>
+                                          <strong class="primary-font">Jack Sparrow</strong>
                                       </div>
                                       <p>
                                           Moi ? Je suis malhonnête ! Et on sait qu’un homme malhonnête le restera quoi qu’il arrive... Honnêtement, ce sont des hommes honnêtes dont il faut se méfier, parce qu’on peut jamais prévoir à quel moment il feront un truc incroyablement... stupide.
-                                          Hey face de poulpe tu ne me crois pas ? alors lance la discussion et je disparaîtrai à tout jamais !
+                                          Hey face de poulpe tu ne me crois pas ? <strong>Alors lance la discussion et je disparaîtrai à tout jamais !</strong>
                                       </p>
                                   </div>
                               </li>
@@ -215,7 +229,7 @@
                       </div>
                       <div class="panel-footer">
                         <form action="/goMess" method="POST">
-                          <input id="userAuth" name="message[user]" value="Flo" type="hidden">
+                          <input id="userAuth" name="message[user_id]" value="<%= @userId %>" type="hidden">
                           <div class="input-group">
                               <input id="btn-input" name="message[message]" type="text" class="form-control input-sm" placeholder="Entrez votre message ici...">
                               <span class="input-group-btn">
