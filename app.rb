@@ -7,7 +7,7 @@ require_relative 'models/message'
 
 enable :sessions
 
-class chat < sinatra::Base
+class Chat < sinatra::Base
   configure do
       Mongoid.load!("mongoid.yml")
       mime_type :css, 'text/css'

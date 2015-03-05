@@ -1,2 +1,2 @@
 require './app'
-run chat.new
+run Chat.new
