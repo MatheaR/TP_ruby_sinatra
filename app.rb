@@ -6,7 +6,7 @@ require 'bootstrap'
 enable :sessions
 
 configure do
-    Mongoid.load!("./mongoid.yml")
+    Mongoid.load!("mongoid.yml")
     mime_type :css, 'text/css'
 end
 
@@ -21,7 +21,6 @@ end
 
 class Message
   include Mongoid::Document
-
 
   field :message,   type: String
   belongs_to :user

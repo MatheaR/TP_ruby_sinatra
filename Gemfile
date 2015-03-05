@@ -6,3 +6,4 @@ gem "mongoid"
 gem "redcarpet"
 gem "bootstrap"
 gem 'pg'
+gem 'rake'
