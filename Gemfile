@@ -7,3 +7,4 @@ gem "redcarpet"
 gem "bootstrap"
 gem 'pg'
 gem 'rake'
+gem 'puma'
