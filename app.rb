@@ -1,6 +1,5 @@
 require 'sinatra'
 require 'mongoid'
-require 'slim'
 require 'redcarpet'
 require 'bootstrap'
 
