@@ -1,2 +1,2 @@
 require './app'
-run Chat.new
+run Sinatra::Application
