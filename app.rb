@@ -2,14 +2,31 @@ require 'sinatra'
 require 'mongoid'
 require 'redcarpet'
 require 'bootstrap'
-require_relative 'models/user'
-require_relative 'models/message'
+# require_relative 'models/user'
+# require_relative 'models/message'
 
 enable :sessions
 
 configure do
     Mongoid.load!("mongoid.yml")
     mime_type :css, 'text/css'
+end
+
+class User
+  include Mongoid::Document
+
+  field :pseudo,   type: String
+  field :initiale, type: String
+  has_many :messages
+  validates_presence_of :pseudo, :initiale
+end
+
+
+class Message
+  include Mongoid::Document
+
+  field :message,   type: String
+  belongs_to :user
 end
 
 get '/' do
