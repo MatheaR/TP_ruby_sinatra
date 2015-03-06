@@ -27,7 +27,8 @@ production:
        # max_retries specifies the number of times to attempt
        # an operation before giving up.
        max_retries: 30
-
+       safe: true
+       skip_version_check: true
        # retry_interval specifies the number of seconds to wait
        # before retrying a single operation.
        retry_interval: 1
