@@ -12,6 +12,7 @@ configure do
     mime_type :css, 'text/css'
 end
 
+
 class User
   include Mongoid::Document
 
